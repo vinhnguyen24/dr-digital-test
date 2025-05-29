@@ -1,9 +1,24 @@
-body {
-  font-family: "Inter", sans-serif;
-  background-color: #f9fafb;
-  color: #1f2937;
-}
-
-h1 {
-  font-size: 1.5rem;
+.abe-list-page {
+  font-family: "SF Pro Display";
+  background-color: #d9d9d9;
+  .__header {
+    background-color: #fff;
+    height: 68px;
+    border-bottom: 1px solid #edeef1;
+    padding: 16px;
+  }
+  .__header h1 {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 150%;
+  }
+  .__content {
+    margin: 16px;
+    background-color: #fff;
+    min-height: calc(100vh - 68px - 32px);
+    .__content-header {
+      padding: 16px 24px;
+    }
+  }
 }

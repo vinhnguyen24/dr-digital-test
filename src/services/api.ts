@@ -41,3 +41,12 @@ export const fetchAbes = async (
 
   return { data: paged, total };
 };
+
+export const addAbes = async (newAbes: Abe[]): Promise<Abe[]> => {
+  const added: Abe[] = [];
+  for (const abe of newAbes) {
+    const res = await axios.post<Abe>(`${API_URL}/abes`, abe);
+    added.push(res.data);
+  }
+  return added;
+};

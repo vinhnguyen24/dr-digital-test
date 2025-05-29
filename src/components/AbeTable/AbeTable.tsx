@@ -1,9 +1,10 @@
 // components/AbeTable.tsx
 import React, { JSX } from "react";
-import { Table } from "antd";
+import { Table, Empty, Button } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { Abe } from "../../types/abe";
 import { EyeOutlined } from "@ant-design/icons";
+import EmptyImage from "../../assets/images/empty-image.png";
 import "./AbeTable.scss";
 interface Props {
   data: Abe[];
@@ -11,6 +12,9 @@ interface Props {
 }
 
 const AbeTable: React.FC<Props> = ({ data, loading }) => {
+  const customEmpty = (
+    <Empty image={EmptyImage} description="Danh sách trống" />
+  );
   const columns: ColumnsType<Abe> = [
     {
       title: "STT",
@@ -61,11 +65,14 @@ const AbeTable: React.FC<Props> = ({ data, loading }) => {
     {
       title: "Hành động",
       key: "action",
+      align: "center",
       render: (_, record) => (
-        <div className="action">
-          <button onClick={() => {}}>
-            <EyeOutlined />
-          </button>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <Button
+            type="text"
+            icon={<EyeOutlined style={{ color: "#FF7A00", fontSize: 18 }} />}
+            style={{ padding: 0, height: 24, width: 24 }}
+          />
         </div>
       ),
     },
@@ -89,6 +96,7 @@ const AbeTable: React.FC<Props> = ({ data, loading }) => {
       rowKey="id"
       loading={loading}
       pagination={{ pageSize: 10 }}
+      locale={{ emptyText: customEmpty }}
     />
   );
 };

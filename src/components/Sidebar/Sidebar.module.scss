@@ -1,12 +1,13 @@
 .sidebar {
-  width: 80px;
-  background-color: #f5f6fa;
+  width: 92px;
+  background-color: #ffffff;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding: 28px 14px;
-  height: calc(100vh - 56px);
+  height: 100vh;
   align-items: center;
+  border: 1px solid #edeef1;
 }
 
 .top {
