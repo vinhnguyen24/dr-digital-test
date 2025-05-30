@@ -7,7 +7,7 @@ function App() {
   return (
     <div style={{ display: "flex" }}>
       <Sidebar />
-      <main style={{ flex: 1 }}>
+      <main style={{ flex: 1, background: "#d9d9d9" }}>
         <AbeListPage />
       </main>
     </div>

@@ -42,6 +42,9 @@ const AbeTable: React.FC<Props> = ({
       title: "Mã nhân viên",
       dataIndex: "userId",
       key: "userId",
+      render: (userId: string) => {
+        return `#${userId}`;
+      },
     },
     {
       title: "Số điện thoại",
@@ -113,6 +116,7 @@ const AbeTable: React.FC<Props> = ({
         ),
       }}
       locale={{ emptyText: customEmpty }}
+      scroll={{ x: "max-content" }}
     />
   );
 };

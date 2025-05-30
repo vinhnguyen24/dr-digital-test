@@ -11,13 +11,10 @@ export const fetchAbes = async (
   limit = 10,
   region?: string,
   status?: string
-): Promise<{ data: Abe[]; total: number }> => {
+): Promise<{ data: Abe[]; total: number; regions: string[] }> => {
   const params: Record<string, string | number> = { _limit: 10000 };
-
   const res = await axios.get<Abe[]>(`${API_URL}/abes`, { params });
-
   let filtered = res.data;
-
   if (search) {
     const keyword = search.toLowerCase();
     filtered = filtered.filter(
@@ -34,11 +31,14 @@ export const fetchAbes = async (
   if (status) {
     filtered = filtered.filter((abe) => abe.status === status);
   }
+  const regions = Array.from(
+    new Set(res.data.map((abe) => abe.region).filter(Boolean))
+  );
 
   const total = filtered.length;
   const paged = filtered.slice((page - 1) * limit, page * limit);
 
-  return { data: paged, total };
+  return { data: paged, total, regions };
 };
 
 export const addAbes = async (newAbes: Abe[]): Promise<Abe[]> => {
@@ -54,14 +54,14 @@ export const addAbes = async (newAbes: Abe[]): Promise<Abe[]> => {
   return added;
 };
 
-export const fetchRegions = async (): Promise<string[]> => {
-  const res = await axios.get<Abe[]>(`${API_URL}/abes`, {
-    params: { _limit: 10000 },
-  });
+// export const fetchRegions = async (): Promise<string[]> => {
+//   const res = await axios.get<Abe[]>(`${API_URL}/abes`, {
+//     params: { _limit: 10000 },
+//   });
 
-  const regions = Array.from(
-    new Set(res.data.map((abe) => abe.region).filter(Boolean))
-  );
+//   const regions = Array.from(
+//     new Set(res.data.map((abe) => abe.region).filter(Boolean))
+//   );
 
-  return regions;
-};
+//   return regions;
+// };

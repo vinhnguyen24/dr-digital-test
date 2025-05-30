@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchAbes, addAbes, fetchRegions } from "../services/api";
+import { fetchAbes, addAbes } from "../services/api";
 import { Abe } from "../types/abe";
 import AbeTable from "../components/AbeTable/AbeTable";
 import {
@@ -53,23 +53,19 @@ const AbeListPage: React.FC = () => {
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
-    fetchRegions().then(setRegionOptions);
-  }, []);
-  useEffect(() => {
     const load = async () => {
       setLoading(true);
       try {
         const res = await fetchAbes(search, page, pageSize, region, status);
         setAbes(res.data);
         setTotal(res.total);
-        console.log(res.total);
+        setRegionOptions(res.regions);
       } catch (e) {
         console.error("Lỗi khi load dữ liệu:", e);
       } finally {
         setLoading(false);
       }
     };
-
     load();
   }, [search, page, region, status, resetFlag]);
 
@@ -235,7 +231,7 @@ const AbeListPage: React.FC = () => {
               </Space>
             </Col>
           </Row>
-          {abes.length ? (
+          {abes.length || search || region || status ? (
             <Row>
               <Col>
                 <Space>
@@ -355,7 +351,7 @@ const AbeListPage: React.FC = () => {
               {selectedUser.fullName}
             </Descriptions.Item>
             <Descriptions.Item label="Mã nhân viên">
-              {selectedUser.userId}
+              {`#${selectedUser.userId}`}
             </Descriptions.Item>
             <Descriptions.Item label="Số điện thoại">
               {selectedUser.phoneNumber}
@@ -403,7 +399,13 @@ const AbeListPage: React.FC = () => {
           rowKey="id"
           columns={[
             { title: "Họ và tên", dataIndex: "fullName" },
-            { title: "Mã NV", dataIndex: "userId" },
+            {
+              title: "Mã NV",
+              dataIndex: "userId",
+              render: (userId: string) => {
+                return `#${userId}`;
+              },
+            },
             { title: "SĐT", dataIndex: "phoneNumber" },
             { title: "Vùng", dataIndex: "region" },
             { title: "Email", dataIndex: "email" },
