@@ -1,12 +1,12 @@
 // src/types/abe.ts
 
 export interface Abe {
-  id: number;
+  id: string;
   fullName: string;
   userId: string;
   phoneNumber: string;
   region: string;
-  role: 'staff' | 'supervisor';
+  role: "staff" | "supervisor";
   email: string;
-  status: 'active' | 'pending' | 'banned';
+  status: "active" | "pending" | "banned";
 }

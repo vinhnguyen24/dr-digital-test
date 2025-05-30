@@ -6,12 +6,24 @@ import { Abe } from "../../types/abe";
 import { EyeOutlined } from "@ant-design/icons";
 import EmptyImage from "../../assets/images/empty-image.png";
 import "./AbeTable.scss";
+import { statusColorMap, roleMap } from "../../utils/constant";
 interface Props {
   data: Abe[];
   loading: boolean;
+  handleView: (user: Abe) => void;
+  total: number;
+  page: number;
+  setPage: (user: number) => void;
 }
 
-const AbeTable: React.FC<Props> = ({ data, loading }) => {
+const AbeTable: React.FC<Props> = ({
+  data,
+  loading,
+  handleView,
+  total,
+  page,
+  setPage,
+}) => {
   const customEmpty = (
     <Empty image={EmptyImage} description="Danh sách trống" />
   );
@@ -72,22 +84,12 @@ const AbeTable: React.FC<Props> = ({ data, loading }) => {
             type="text"
             icon={<EyeOutlined style={{ color: "#FF7A00", fontSize: 18 }} />}
             style={{ padding: 0, height: 24, width: 24 }}
+            onClick={() => handleView(record)}
           />
         </div>
       ),
     },
   ];
-
-  const statusColorMap: { [key: string]: JSX.Element } = {
-    active: <div className="status active">• Đang hoạt động</div>,
-    pending: <span className="status pending">• Chưa kích hoạt</span>,
-    banned: <span className="status banned">• Đã khóa tài khoản</span>,
-  };
-
-  const roleMap: { [key: string]: JSX.Element } = {
-    staff: <span>Nhân viên</span>,
-    supervisor: <span>Giám sát</span>,
-  };
 
   return (
     <Table
@@ -95,7 +97,21 @@ const AbeTable: React.FC<Props> = ({ data, loading }) => {
       dataSource={data}
       rowKey="id"
       loading={loading}
-      pagination={{ pageSize: 10 }}
+      pagination={{
+        current: page,
+        pageSize: 10,
+        total: total,
+        onChange: (page) => setPage(page),
+        showTotal: (total, range) => (
+          <span>
+            Hiện thị{" "}
+            <span style={{ color: "#F26D21", fontWeight: "bold" }}>
+              {range[1] - range[0] + 1}
+            </span>{" "}
+            nhân viên
+          </span>
+        ),
+      }}
       locale={{ emptyText: customEmpty }}
     />
   );

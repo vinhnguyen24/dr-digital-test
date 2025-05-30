@@ -21,4 +21,36 @@
       padding: 16px 24px;
     }
   }
+  .ant-pagination {
+    border-radius: 8px;
+    padding: 8px 16px;
+  }
+
+  .ant-pagination-item-active {
+    background-color: #edeef1 !important;
+    a {
+      color: #1d2939 !important;
+    }
+
+    border-radius: 8px;
+  }
+
+  .ant-pagination-item {
+    border: none;
+    color: #475467;
+    background-color: transparent;
+  }
+
+  .ant-pagination-next > .ant-pagination-item-link,
+  .ant-pagination-prev > .ant-pagination-item-link {
+    color: #667085;
+  }
+  .ant-pagination-total-text {
+    position: absolute;
+    left: 0;
+    margin-left: 8px;
+    margin-right: 16px;
+    font-weight: 500;
+    color: #333;
+  }
 }

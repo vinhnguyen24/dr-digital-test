@@ -2,6 +2,7 @@
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import { Abe } from "../types/abe";
+import { v4 as uuidv4 } from "uuid";
 
 const statusTextMap: { [key: string]: string } = {
   active: "Đang hoạt động",
@@ -27,7 +28,7 @@ const roleTextToValue: { [key: string]: Abe["role"] } = {
 
 function mapExcelRowToAbe(row: Record<string, any>): Abe {
   return {
-    id: Number(row["ID"]) || 0,
+    id: row["ID"] || uuidv4(),
     fullName: row["Họ và tên"] || "",
     userId: row["Mã nhân viên"] || "",
     phoneNumber: row["Số điện thoại"] || "",
